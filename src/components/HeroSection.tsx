@@ -1,21 +1,11 @@
 import { useState } from 'react';
-import BackgroundAnimation from './BackgroundAnimation';
+import HostingBackground3D from './HostingBackground3D';
 import '../styles/HeroSection.css';
 
 const HeroSection = () => {
-  const [email, setEmail] = useState('');
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Handle newsletter signup
-    console.log('Newsletter signup:', email);
-    setEmail('');
-    alert('Thank you for signing up for our newsletter!');
-  };
-
   return (
     <div className="hero-section">
-      <BackgroundAnimation style={{ opacity: 0.2 }} />
+      <HostingBackground3D style={{ opacity: 0.8 }} />
       
       <div className="hero-content">
         <h1>Fast Hosting & Domains Made Easy</h1>
@@ -28,57 +18,21 @@ const HeroSection = () => {
         
         <div className="hero-features">
           <div className="hero-feature">
-            <div className="feature-icon">🚀</div>
+            <div className="feature-icon" style={{ fontSize: '24px' }}>&#x1F680;</div>
             <span>Lightning Fast</span>
           </div>
           <div className="hero-feature">
-            <div className="feature-icon">🔒</div>
+            <div className="feature-icon" style={{ fontSize: '24px' }}>&#x1F510;</div>
             <span>Secure Hosting</span>
           </div>
           <div className="hero-feature">
-            <div className="feature-icon">⚙️</div>
+            <div className="feature-icon" style={{ fontSize: '24px' }}>&#x2699;</div>
             <span>Easy Setup</span>
           </div>
           <div className="hero-feature">
-            <div className="feature-icon">🔄</div>
+            <div className="feature-icon" style={{ fontSize: '24px' }}>&#x1F504;</div>
             <span>24/7 Support</span>
           </div>
-        </div>
-      </div>
-      
-      <div className="hero-stats">
-        <div className="stat-item">
-          <h3>99.9%</h3>
-          <p>Uptime Guarantee</p>
-        </div>
-        <div className="stat-item">
-          <h3>24/7</h3>
-          <p>Customer Support</p>
-        </div>
-        <div className="stat-item">
-          <h3>10K+</h3>
-          <p>Happy Customers</p>
-        </div>
-        <div className="stat-item">
-          <h3>50+</h3>
-          <p>Data Centers</p>
-        </div>
-      </div>
-      
-      <div className="newsletter-signup">
-        <div className="newsletter-content">
-          <h3>Stay Updated</h3>
-          <p>Subscribe to our newsletter for the latest news and promotions</p>
-          <form onSubmit={handleSubmit} className="newsletter-form">
-            <input 
-              type="email" 
-              value={email} 
-              onChange={(e) => setEmail(e.target.value)} 
-              placeholder="Enter your email" 
-              required 
-            />
-            <button type="submit">Subscribe</button>
-          </form>
         </div>
       </div>
     </div>
