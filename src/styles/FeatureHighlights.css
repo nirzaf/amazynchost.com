@@ -148,6 +148,19 @@
   justify-content: center;
 }
 
+.feature-img {
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.feature-img:hover {
+  transform: scale(1.02);
+}
+
 .image-placeholder {
   width: 100%;
   aspect-ratio: 16/9;
@@ -177,5 +190,9 @@
   
   .feature-showcase.reverse .showcase-image {
     order: -1;
+  }
+  
+  .feature-img {
+    max-width: 100%;
   }
 }

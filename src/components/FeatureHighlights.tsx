@@ -73,9 +73,11 @@ const FeatureHighlights = () => {
             <button className="learn-more-btn">Learn More</button>
           </div>
           <div className="showcase-image">
-            <div className="image-placeholder">
-              <div className="placeholder-text">Control Panel Dashboard</div>
-            </div>
+            <img 
+              src="https://ik.imagekit.io/fazrinphcc/server-wordpress-768x532.png?updatedAt=1740701524989" 
+              alt="Control Panel Dashboard" 
+              className="feature-img"
+            />
           </div>
         </div>
         
@@ -104,9 +106,11 @@ const FeatureHighlights = () => {
             <button className="learn-more-btn">Learn More</button>
           </div>
           <div className="showcase-image">
-            <div className="image-placeholder">
-              <div className="placeholder-text">Global CDN Map</div>
-            </div>
+            <img 
+              src="https://ik.imagekit.io/fazrinphcc/migrate-hosting-img.png?updatedAt=1740701524956" 
+              alt="Global CDN Map" 
+              className="feature-img"
+            />
           </div>
         </div>
       </div>
