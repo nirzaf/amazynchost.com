@@ -2,7 +2,7 @@ import { useRef, useState, useMemo } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { 
   OrbitControls, 
-  Line, 
+  Line as ThreeLine, 
   Trail, 
   Stars
 } from '@react-three/drei';
@@ -128,7 +128,7 @@ const Globe = ({ position = [0, 0, 0], scale = 1 }) => {
         );
         
         return (
-          <Line
+          <ThreeLine
             key={`line-${i}`}
             points={[start, end]}
             color={point.color}
@@ -192,7 +192,7 @@ const DataPacket = ({
       </Trail>
       
       {/* Connection line */}
-      <Line
+      <ThreeLine
         points={[
           new THREE.Vector3(...startPosition),
           new THREE.Vector3(...endPosition)
@@ -250,6 +250,12 @@ const DataTransmission = ({
   speed = 1, 
   color = "#00ffff", 
   size = 0.05 
+}: {
+  start: [number, number, number],
+  end: [number, number, number],
+  speed?: number,
+  color?: string,
+  size?: number
 }) => {
   const particleRef = useRef<THREE.Mesh>(null!);
   const [active, setActive] = useState(true);
@@ -295,15 +301,14 @@ const Satellite = ({
   orbitSpeed = 0.2, 
   orbitAngle = 0,
   connectToGlobe = false,
-  globePosition = [-5, 0, -2]
+  globePosition = [-5, 0, -2] as [number, number, number]
 }) => {
   const satelliteRef = useRef<THREE.Group>(null!);
-  const orbitRef = useRef<THREE.Line>(null!);
   const signalRef = useRef<THREE.Mesh>(null!);
   const connectionRef = useRef<THREE.Line>(null!);
   const [initialAngle] = useState(orbitAngle);
   const [showConnection, setShowConnection] = useState(false);
-  const [satellitePosition, setSatellitePosition] = useState([orbitRadius, 0, 0]);
+  const [satellitePosition, setSatellitePosition] = useState<[number, number, number]>([orbitRadius, 0, 0]);
   
   // Create orbit path points
   const orbitPoints = useMemo(() => {
@@ -421,17 +426,14 @@ const Satellite = ({
   return (
     <group>
       {/* Orbit path */}
-      <line ref={orbitRef}>
-        <bufferGeometry attach="geometry">
-          <bufferAttribute
-            attach="attributes-position"
-            array={new Float32Array(orbitPoints.flatMap(p => [p.x, p.y, p.z]))}
-            count={orbitPoints.length}
-            itemSize={3}
-          />
-        </bufferGeometry>
-        <lineBasicMaterial attach="material" color="#2563eb" opacity={0.3} transparent />
-      </line>
+      <group>
+        <ThreeLine
+          points={orbitPoints.map(p => [p.x, p.y, p.z])}
+          color="#2563eb"
+          opacity={0.3}
+          transparent
+        />
+      </group>
       
       {/* Satellite */}
       <group ref={satelliteRef} position={[orbitRadius, 0, 0]}>
@@ -470,47 +472,36 @@ const Satellite = ({
       {/* Connection to globe */}
       {connectToGlobe && (
         <>
-          <line ref={connectionRef} visible={showConnection}>
-            <bufferGeometry attach="geometry">
-              <bufferAttribute
-                attach="attributes-position"
-                array={new Float32Array([orbitRadius, 0, 0, globePosition[0], globePosition[1], globePosition[2]])}
-                count={2}
-                itemSize={3}
-              />
-            </bufferGeometry>
-            <lineBasicMaterial 
-              attach="material" 
-              color="#00ffff" 
-              opacity={0.7} 
-              transparent 
-              linewidth={1} 
-              dashed={true}
-              dashSize={0.1}
-              gapSize={0.05}
+          <group>
+            <ThreeLine
+              points={[[orbitRadius, 0, 0], [globePosition[0], globePosition[1], globePosition[2]]]}
+              color="#00ffff"
+              opacity={0.7}
+              transparent
+              linewidth={1}
             />
-          </line>
+          </group>
           
           {/* Data transmission particles */}
           {showConnection && (
             <>
               <DataTransmission 
-                start={satellitePosition} 
-                end={globePosition} 
+                start={satellitePosition as [number, number, number]} 
+                end={globePosition as [number, number, number]} 
                 speed={1.5} 
                 color="#00ffff" 
                 size={0.05} 
               />
               <DataTransmission 
-                start={satellitePosition} 
-                end={globePosition} 
+                start={satellitePosition as [number, number, number]} 
+                end={globePosition as [number, number, number]} 
                 speed={1.2} 
                 color="#0ea5e9" 
                 size={0.04} 
               />
               <DataTransmission 
-                start={globePosition} 
-                end={satellitePosition} 
+                start={globePosition as [number, number, number]} 
+                end={satellitePosition as [number, number, number]} 
                 speed={1.8} 
                 color="#a855f7" 
                 size={0.05} 
