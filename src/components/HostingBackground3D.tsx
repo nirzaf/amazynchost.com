@@ -11,7 +11,8 @@ import {
   Line,
   MeshTransmissionMaterial,
   MeshDistortMaterial,
-  Billboard
+  Billboard,
+  PerspectiveCamera
 } from '@react-three/drei';
 import * as THREE from 'three';
 
@@ -238,14 +239,9 @@ interface HostingBackground3DProps {
 }
 
 const HostingBackground3D: React.FC<HostingBackground3DProps> = () => {
-  const { camera } = useThree();
-  
-  useEffect(() => {
-    camera.position.z = 10;
-  }, [camera]);
-  
   return (
     <group>
+      <PerspectiveCamera makeDefault position={[0, 0, 10]} fov={75} />
       <ambientLight intensity={0.5} />
       <pointLight position={[10, 10, 10]} intensity={1} />
       <pointLight position={[-10, -10, -10]} intensity={0.5} color="#4060ff" />
