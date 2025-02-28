@@ -6,6 +6,8 @@
   justify-content: center;
   align-items: center;
   padding: 2rem;
+  padding-top: 64px; /* Match header height exactly */
+  margin-top: 0; /* Remove any margin */
   overflow: hidden;
   /* Completely transparent background to show the animation */
   background: transparent;
@@ -241,8 +243,8 @@
   .hero-section {
     padding: 1rem;
     min-height: auto;
-    padding-top: 3rem;
-    padding-bottom: 3rem;
+    padding-top: 64px; /* Match header height on mobile */
+    margin-top: 0; /* Remove any margin */
   }
   
   .hero-content {
