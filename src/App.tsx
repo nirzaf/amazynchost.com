@@ -1,4 +1,5 @@
 import './App.css'
+import { useState } from 'react'
 import HeroSection from './components/HeroSection'
 import FeatureHighlights from './components/FeatureHighlights'
 import HostingTypes from './components/HostingTypes'
@@ -7,6 +8,12 @@ import PricingPlans from './components/PricingPlans'
 import Testimonials from './components/Testimonials'
 
 function App() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const toggleMobileMenu = () => {
+    setMobileMenuOpen(!mobileMenuOpen);
+  };
+
   return (
     <div className="app-container">
       <header className="main-header">
@@ -14,7 +21,12 @@ function App() {
           <div className="logo">
             <span>AmazyncHost</span>
           </div>
-          <nav className="main-nav">
+          <div className={`mobile-menu-toggle ${mobileMenuOpen ? 'active' : ''}`} onClick={toggleMobileMenu}>
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+          <nav className={`main-nav ${mobileMenuOpen ? 'active' : ''}`}>
             <ul>
               <li><a href="#">Home</a></li>
               <li><a href="#">Hosting</a></li>
