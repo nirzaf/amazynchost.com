@@ -76,7 +76,7 @@ const HostingTypes = () => {
   const [billingPeriod, setBillingPeriod] = useState<'monthly' | 'yearly'>('monthly');
   
   return (
-    <div className="hosting-types-container">
+    <div className="hosting-types-container" id="hosting">
       <div className="hosting-types-content">
         <div className="section-header">
           <h2>Choose Your Hosting Plan</h2>

@@ -52,6 +52,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({
   return (
     <section 
       className={classNames('hero-section', className)} 
+      id="home"
       {...rest}
     >
       {/* Background animation without fade-in effect */}
