@@ -1,11 +1,34 @@
+import { useEffect, useState } from 'react';
 import BackgroundAnimation from './BackgroundAnimation';
 import '../styles/HeroSection.css';
 
 const HeroSection = () => {
+  const [backgroundOpacity, setBackgroundOpacity] = useState(1);
+
+  // Adjust background opacity based on screen size
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= 768) {
+        setBackgroundOpacity(0.8); // Reduce opacity on mobile for better readability
+      } else {
+        setBackgroundOpacity(1);
+      }
+    };
+
+    // Set initial opacity
+    handleResize();
+
+    // Add event listener
+    window.addEventListener('resize', handleResize);
+
+    // Clean up
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   return (
     <div className="hero-section">
       {/* Set higher opacity for better visibility */}
-      <BackgroundAnimation style={{ opacity: 1 }} />
+      <BackgroundAnimation style={{ opacity: backgroundOpacity }} />
       
       <div className="hero-content">
         <h1>Fast Hosting & Domains Made Easy</h1>
