@@ -95,8 +95,26 @@ const HeroSection = () => {
             <p>Experience lightning-fast hosting with 99.9% uptime guarantee and 24/7 support</p>
             
             <div className="hero-cta">
-              <button className="cta-btn primary">Get Started</button>
-              <button className="cta-btn secondary">Learn More</button>
+              <button 
+                className="cta-btn secondary" 
+                style={{ 
+                  color: 'white', 
+                  background: 'rgba(255, 255, 255, 0.1)',
+                  border: '1px solid rgba(255, 255, 255, 0.3)'
+                }}
+              >
+                Get Started
+              </button>
+              <button 
+                className="cta-btn secondary" 
+                style={{ 
+                  color: 'white', 
+                  background: 'rgba(255, 255, 255, 0.1)',
+                  border: '1px solid rgba(255, 255, 255, 0.3)'
+                }}
+              >
+                Learn More
+              </button>
             </div>
             
             <div className="hero-features">

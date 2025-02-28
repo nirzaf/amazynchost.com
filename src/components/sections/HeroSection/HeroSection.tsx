@@ -124,9 +124,14 @@ const HeroSection: React.FC<HeroSectionProps> = ({
               
               <div className="hero-cta">
                 <Button 
-                  variant="primary" 
+                  variant="outline" 
                   size="large" 
                   onClick={onPrimaryButtonClick}
+                  style={{
+                    color: 'white',
+                    borderColor: 'rgba(255, 255, 255, 0.3)',
+                    background: 'rgba(255, 255, 255, 0.1)'
+                  }}
                 >
                   {primaryButtonText}
                 </Button>
@@ -134,6 +139,11 @@ const HeroSection: React.FC<HeroSectionProps> = ({
                   variant="outline" 
                   size="large" 
                   onClick={onSecondaryButtonClick}
+                  style={{
+                    color: 'white',
+                    borderColor: 'rgba(255, 255, 255, 0.3)',
+                    background: 'rgba(255, 255, 255, 0.1)'
+                  }}
                 >
                   {secondaryButtonText}
                 </Button>
