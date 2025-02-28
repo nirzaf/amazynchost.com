@@ -1,5 +1,5 @@
-import { useRef, useState, useEffect } from 'react';
-import { useFrame, useThree } from '@react-three/fiber';
+import { useRef, useState } from 'react';
+import { useFrame } from '@react-three/fiber';
 import {
   Stars,
   Cloud,

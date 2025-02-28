@@ -1,4 +1,3 @@
-import React from 'react';
 import BackgroundAnimation from './BackgroundAnimation';
 import '../styles/HeroSection.css';
 
