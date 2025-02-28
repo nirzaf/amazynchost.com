@@ -30,6 +30,21 @@ const Header: React.FC<HeaderProps> = ({
     setIsScrolled(scrollY > 20);
   }, [scrollY]);
 
+  // Close mobile menu on window resize
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth > 992 && mobileMenuOpen) {
+        setMobileMenuOpen(false);
+        document.body.style.overflow = '';
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [mobileMenuOpen]);
+
   // Toggle mobile menu
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
@@ -70,6 +85,11 @@ const Header: React.FC<HeaderProps> = ({
             aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
             role="button"
             tabIndex={0}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                toggleMobileMenu();
+              }
+            }}
           >
             <span></span>
             <span></span>

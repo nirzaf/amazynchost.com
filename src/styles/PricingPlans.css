@@ -115,7 +115,9 @@ input:checked + .slider:before {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 2rem;
-  margin-bottom: 4rem;
+  margin-bottom: 6rem;
+  position: relative;
+  z-index: 1;
 }
 
 .pricing-card {
@@ -140,11 +142,15 @@ input:checked + .slider:before {
 .pricing-card.popular {
   border: 2px solid #2563eb;
   transform: scale(1.05);
-  z-index: 1;
+  z-index: 2;
+  margin-top: -5px;
+  margin-bottom: 5px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
 .pricing-card.popular:hover {
   transform: scale(1.05) translateY(-10px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
 }
 
 .popular-badge {
@@ -263,6 +269,8 @@ input:checked + .slider:before {
   background-color: white;
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  position: relative;
+  z-index: 0;
 }
 
 .guarantee-icon {
@@ -285,6 +293,14 @@ input:checked + .slider:before {
   font-size: 0.95rem;
 }
 
+.guarantee-wrapper {
+  padding-top: 2rem;
+  margin-top: 2rem;
+  position: relative;
+  z-index: 0;
+  clear: both;
+}
+
 @media (max-width: 768px) {
   .pricing-card.popular {
     transform: scale(1);
@@ -298,6 +314,7 @@ input:checked + .slider:before {
     flex-direction: column;
     text-align: center;
     gap: 1rem;
+    margin-top: 4rem;
   }
   
   .guarantee-text {

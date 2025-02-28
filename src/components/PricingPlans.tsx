@@ -76,25 +76,6 @@ const plans: Plan[] = [
       { name: 'Priority Support', included: true },
       { name: 'Daily Backups', included: true },
     ]
-  },
-  {
-    id: 'enterprise',
-    name: 'Enterprise',
-    price: {
-      monthly: 24.99,
-      yearly: 249.99
-    },
-    description: 'Maximum performance for high-demand applications',
-    features: [
-      { name: 'Unlimited Websites', included: true },
-      { name: '500GB SSD Storage', included: true },
-      { name: 'Unmetered Bandwidth', included: true },
-      { name: 'Free SSL Certificate', included: true },
-      { name: 'Unlimited Email Accounts', included: true },
-      { name: 'Free Domain for 1 Year', included: true },
-      { name: 'Priority Support', included: true },
-      { name: 'Daily Backups', included: true },
-    ]
   }
 ];
 
@@ -151,11 +132,13 @@ const PricingPlans = () => {
           ))}
         </div>
         
-        <div className="pricing-guarantee">
-          <div className="guarantee-icon">🛡️</div>
-          <div className="guarantee-text">
-            <h4>30-Day Money-Back Guarantee</h4>
-            <p>Try any plan risk-free for 30 days. If you're not completely satisfied, get a full refund.</p>
+        <div className="guarantee-wrapper">
+          <div className="pricing-guarantee">
+            <div className="guarantee-icon">🛡️</div>
+            <div className="guarantee-text">
+              <h4>30-Day Money-Back Guarantee</h4>
+              <p>Try any plan risk-free for 30 days. If you're not completely satisfied, get a full refund.</p>
+            </div>
           </div>
         </div>
       </div>
