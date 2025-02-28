@@ -48,8 +48,20 @@ const GridLines = () => {
 
 const BackgroundAnimation = ({ style = {} }: { style?: React.CSSProperties }) => {
   return (
-    <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: -1, ...style }}>
-      <Canvas camera={{ position: [0, 0, 10], fov: 75 }}>
+    <div style={{ 
+      position: 'absolute', 
+      top: 0, 
+      left: 0, 
+      width: '100%', 
+      height: '100%', 
+      zIndex: -1, 
+      pointerEvents: 'none', 
+      ...style 
+    }}>
+      <Canvas 
+        camera={{ position: [0, 0, 10], fov: 75 }}
+        style={{ background: 'transparent' }}
+      >
         <ambientLight intensity={0.5} />
         <directionalLight position={[10, 10, 5]} intensity={1} />
         <directionalLight position={[-10, -10, -5]} intensity={0.5} />

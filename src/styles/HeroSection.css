@@ -7,7 +7,8 @@
   align-items: center;
   padding: 2rem;
   overflow: hidden;
-  background: linear-gradient(135deg, rgba(248, 250, 252, 0.9) 0%, rgba(241, 245, 249, 0.9) 100%);
+  /* Removing the background gradient to allow the animation to show through */
+  background: transparent;
 }
 
 .hero-content {
@@ -84,11 +85,12 @@
 }
 
 .hero-features {
-  display: flex;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
   gap: 1rem;
-  flex-wrap: wrap;
-  margin-top: 0.5rem;
+  width: 100%;
+  max-width: 600px;
+  margin: 1.5rem auto 0;
 }
 
 .hero-feature {
@@ -96,11 +98,13 @@
   align-items: center;
   gap: 0.5rem;
   background-color: rgba(255, 255, 255, 0.9);
-  padding: 0.6rem 1rem;
-  border-radius: 8px;
+  padding: 1rem;
+  border-radius: 12px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   border: 1px solid rgba(226, 232, 240, 0.8);
+  height: 100%;
+  min-height: 80px;
 }
 
 .hero-feature:hover {
@@ -109,7 +113,6 @@
 }
 
 .feature-icon {
-  font-size: 1.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -119,12 +122,15 @@
   color: white;
   border-radius: 50%;
   margin-right: 0.5rem;
+  flex-shrink: 0;
 }
 
 .hero-feature span {
   font-weight: 600;
   color: #1e293b;
   font-size: 1rem;
+  flex: 1;
+  text-align: left;
 }
 
 .hero-stats {
