@@ -64,4 +64,5 @@ export interface NavLink {
   text: string;
   url: string;
   isActive?: boolean;
+  icon?: React.ReactNode;
 }
