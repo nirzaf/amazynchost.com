@@ -33,7 +33,7 @@ const Layout: React.FC<LayoutProps> = ({
     <div className={classNames('layout', className)} {...rest}>
       <Header {...headerProps} />
       
-      <main className="main-content">
+      <main className="main-content" style={{ padding: 0, margin: 0 }}>
         {children}
       </main>
       

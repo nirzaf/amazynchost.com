@@ -73,9 +73,9 @@ const HeroSection = () => {
   }, [animationLoaded]);
 
   return (
-    <div className="hero-section">
+    <div className="hero-section" style={{ marginTop: 0 }}>
       {/* Apply fade-in effect to the background animation */}
-      <div className={`background-animation-container ${animationLoaded ? 'loaded' : ''}`}>
+      <div className={`background-animation-container ${animationLoaded ? 'loaded' : ''}`} style={{ top: 0 }}>
         <BackgroundAnimation style={{ opacity: backgroundOpacity }} />
       </div>
       

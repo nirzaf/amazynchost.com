@@ -2,11 +2,14 @@
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  margin: 0;
+  padding: 0;
 }
 
 .main-content {
   flex: 1;
-  padding-top: 80px; /* Adjust based on header height */
+  padding: 0;
+  margin: 0;
 }
 
 .back-to-top {
