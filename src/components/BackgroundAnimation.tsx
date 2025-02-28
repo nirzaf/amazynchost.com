@@ -6,9 +6,10 @@ import * as THREE from 'three';
 const AnimatedSphere = ({ position, color, speed, distort }: { position: [number, number, number], color: string, speed: number, distort: number }) => {
   const mesh = useRef<THREE.Mesh>(null!);
   
-  useFrame((state) => {
+  useFrame(() => {
     if (!mesh.current) return;
-    mesh.current.rotation.x = mesh.current.rotation.y += 0.01 * speed;
+    mesh.current.rotation.x += 0.01 * speed;
+    mesh.current.rotation.y += 0.01 * speed;
   });
 
   return (

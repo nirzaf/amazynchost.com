@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import './App.css'
 import HeroSection from './components/HeroSection'
 import FeatureHighlights from './components/FeatureHighlights'
@@ -8,8 +7,6 @@ import PricingPlans from './components/PricingPlans'
 import Testimonials from './components/Testimonials'
 
 function App() {
-  const [selectedPlan, setSelectedPlan] = useState('premium');
-
   return (
     <div className="app-container">
       <header className="main-header">
@@ -39,7 +36,7 @@ function App() {
         <FeatureHighlights />
         <HostingTypes />
         <DomainSearch />
-        <PricingPlans selectedPlan={selectedPlan} setSelectedPlan={setSelectedPlan} />
+        <PricingPlans />
         <Testimonials />
       </main>
       

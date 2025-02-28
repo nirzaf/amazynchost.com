@@ -73,7 +73,6 @@ const pricingPlans = [
 ];
 
 const HostingTypes = () => {
-  const [hoveredCard, setHoveredCard] = useState<number | null>(null);
   const [billingPeriod, setBillingPeriod] = useState<'monthly' | 'yearly'>('monthly');
   
   return (
@@ -104,8 +103,6 @@ const HostingTypes = () => {
             <div 
               key={index} 
               className={`pricing-card ${plan.popular ? 'popular' : ''}`}
-              onMouseEnter={() => setHoveredCard(index)}
-              onMouseLeave={() => setHoveredCard(null)}
             >
               {plan.popular && <div className="popular-tag">Most Popular</div>}
               

@@ -1,11 +1,10 @@
-import { useState } from 'react';
-import HostingBackground3D from './HostingBackground3D';
+import HostingBackgroundWrapper from './HostingBackgroundWrapper';
 import '../styles/HeroSection.css';
 
 const HeroSection = () => {
   return (
     <div className="hero-section">
-      <HostingBackground3D style={{ opacity: 0.8 }} />
+      <HostingBackgroundWrapper style={{ opacity: 0.8 }} />
       
       <div className="hero-content">
         <h1>Fast Hosting & Domains Made Easy</h1>
@@ -33,6 +32,25 @@ const HeroSection = () => {
             <div className="feature-icon" style={{ fontSize: '24px' }}>&#x1F504;</div>
             <span>24/7 Support</span>
           </div>
+        </div>
+      </div>
+      
+      <div className="hero-stats">
+        <div className="stat-item">
+          <div className="stat-value">99.9%</div>
+          <div className="stat-label">Uptime Guarantee</div>
+        </div>
+        <div className="stat-item">
+          <div className="stat-value">24/7</div>
+          <div className="stat-label">Customer Support</div>
+        </div>
+        <div className="stat-item">
+          <div className="stat-value">10K+</div>
+          <div className="stat-label">Happy Customers</div>
+        </div>
+        <div className="stat-item">
+          <div className="stat-value">50+</div>
+          <div className="stat-label">Data Centers</div>
         </div>
       </div>
     </div>
