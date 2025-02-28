@@ -39,19 +39,6 @@ const hostingTypes = [
     ],
     price: '$99.99',
     color: '#8b5cf6'
-  },
-  {
-    icon: '☁️',
-    title: 'Cloud Hosting',
-    description: 'Scalable resources for variable traffic and high availability needs.',
-    features: [
-      'Auto-scaling',
-      'Pay-as-you-go',
-      'High Availability',
-      'Global CDN Included'
-    ],
-    price: '$19.99',
-    color: '#f59e0b'
   }
 ];
 
