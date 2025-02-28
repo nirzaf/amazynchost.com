@@ -143,7 +143,7 @@ input:checked + .slider:before {
   height: 100%;
   border: 1px solid #e5e7eb;
   transition: transform 0.3s, box-shadow 0.3s;
-  margin-top: 12px;
+  margin-top: 20px;
 }
 
 .pricing-card:hover {
@@ -153,13 +153,18 @@ input:checked + .slider:before {
 
 .pricing-card.popular {
   border: 2px solid #2563eb;
-  box-shadow: 0 4px 15px rgba(37, 99, 235, 0.15);
+  box-shadow: 0 16px 30px rgba(37, 99, 235, 0.2);
   z-index: 1;
+  transform: translateY(-5px);
+}
+
+.pricing-card.popular:hover {
+  transform: translateY(-10px);
 }
 
 .popular-tag {
   position: absolute;
-  top: -12px;
+  top: -5px;
   left: 50%;
   transform: translateX(-50%);
   background-color: #2563eb;
