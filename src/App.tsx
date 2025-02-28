@@ -2,6 +2,11 @@ import { useState, useEffect } from 'react';
 import { Layout } from './components/layout';
 import { HeroSection } from './components/sections';
 import { useScrollPosition } from './hooks';
+import FeatureHighlights from './components/FeatureHighlights';
+import HostingTypes from './components/HostingTypes';
+import DomainSearch from './components/DomainSearch';
+import PricingPlans from './components/PricingPlans';
+import Testimonials from './components/Testimonials';
 import './App.css';
 
 // Logo component
@@ -124,7 +129,11 @@ function App() {
       showBackToTop={showBackToTop}
     >
       <HeroSection />
-      {/* Add other sections here */}
+      <FeatureHighlights />
+      <HostingTypes />
+      <DomainSearch />
+      <PricingPlans />
+      <Testimonials />
     </Layout>
   );
 }
