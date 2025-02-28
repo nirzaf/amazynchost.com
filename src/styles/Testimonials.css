@@ -1,6 +1,21 @@
 .testimonials-container {
   padding: 5rem 0;
   background-color: white;
+  position: relative;
+  overflow: hidden;
+}
+
+.testimonials-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    radial-gradient(circle at 20% 35%, rgba(37, 99, 235, 0.03) 0%, transparent 50%),
+    radial-gradient(circle at 80% 65%, rgba(124, 58, 237, 0.03) 0%, transparent 50%);
+  pointer-events: none;
 }
 
 .testimonials-content {
@@ -29,8 +44,21 @@
 }
 
 .testimonials-carousel {
+  position: relative;
   max-width: 800px;
-  margin: 0 auto 4rem;
+  margin: 0 auto 6rem;
+}
+
+.testimonials-carousel::after {
+  content: '';
+  position: absolute;
+  bottom: -3rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, rgba(37, 99, 235, 0.3), transparent);
+  border-radius: 3px;
 }
 
 .testimonial-card {
@@ -171,6 +199,54 @@
   color: #64748b;
 }
 
+/* Stats section styling */
+.stats-section {
+  padding: 2rem 0;
+  position: relative;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.9), rgba(249, 250, 251, 0.9));
+  border-radius: 20px;
+  margin: 2rem auto;
+  max-width: 1200px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+
+.stats-header {
+  text-align: center;
+  margin-bottom: 3rem;
+  animation: fadeInUp 0.8s ease forwards;
+}
+
+.stats-header h2 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: #1e293b;
+  background: linear-gradient(90deg, #2563eb, #7c3aed);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+}
+
+.stats-header p {
+  font-size: 1.1rem;
+  color: #64748b;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 @media (max-width: 768px) {
   .testimonial-card {
     padding: 2rem;
@@ -188,5 +264,13 @@
   
   .testimonials-stats {
     grid-template-columns: 1fr;
+  }
+  
+  .stats-header h2 {
+    font-size: 2rem;
+  }
+  
+  .stats-header p {
+    font-size: 1rem;
   }
 }

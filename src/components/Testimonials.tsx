@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import '../styles/Testimonials.css';
+import StatCards from './StatCards';
+import ParticleBackground from './ParticleBackground';
 
 const testimonials = [
   {
@@ -115,19 +117,19 @@ const Testimonials = () => {
           </div>
         </div>
         
-        <div className="testimonials-stats">
-          <div className="stat-item">
-            <h3>10,000+</h3>
-            <p>Happy Customers</p>
+        <div className="stats-section">
+          <ParticleBackground />
+          <div className="stats-header">
+            <h2>Our Numbers Speak for Themselves</h2>
+            <p>Join thousands of satisfied customers who trust AmazyncHost for their hosting needs</p>
           </div>
-          <div className="stat-item">
-            <h3>4.9/5</h3>
-            <p>Average Rating</p>
-          </div>
-          <div className="stat-item">
-            <h3>99.8%</h3>
-            <p>Customer Satisfaction</p>
-          </div>
+          <StatCards 
+            stats={[
+              { value: "10,000+", label: "Happy Customers" },
+              { value: "4.9/5", label: "Average Rating" },
+              { value: "99.8%", label: "Customer Satisfaction" }
+            ]}
+          />
         </div>
       </div>
     </div>
