@@ -90,10 +90,10 @@
 
 .hero-features {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 1rem;
   width: 100%;
-  max-width: 600px;
+  max-width: 900px;
   margin: 1.5rem auto 0;
 }
 
@@ -188,6 +188,21 @@
   color: rgba(255, 255, 255, 0.9);
 }
 
+/* Background Animation Container */
+.background-animation-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 1.2s ease-in-out;
+}
+
+.background-animation-container.loaded {
+  opacity: 1;
+}
+
 /* Media Queries */
 @media (max-width: 992px) {
   .hero-section {
@@ -200,6 +215,12 @@
   
   .hero-content h1 {
     font-size: 2.8rem;
+  }
+  
+  .hero-features {
+    grid-template-columns: repeat(3, 1fr);
+    max-width: 800px;
+    gap: 0.85rem;
   }
   
   .stat-item {
@@ -229,6 +250,8 @@
   }
   
   .hero-features {
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 600px;
     gap: 0.75rem;
   }
   
@@ -287,40 +310,55 @@
   }
   
   .hero-content p {
-    font-size: 0.95rem;
-    margin-bottom: 1.25rem;
+    font-size: 0.9rem;
   }
   
   .hero-cta {
     flex-direction: column;
-    width: 100%;
-    max-width: 300px;
-    margin-left: auto;
-    margin-right: auto;
     gap: 0.75rem;
   }
   
   .cta-btn {
     width: 100%;
-    padding: 0.7rem 1.25rem;
-    font-size: 0.95rem;
+    padding: 0.7rem 1rem;
+    font-size: 0.9rem;
+  }
+  
+  .hero-features {
+    grid-template-columns: 1fr;
+    gap: 0.6rem;
+    max-width: 320px;
+  }
+  
+  .hero-feature {
+    padding: 0.6rem;
+    min-height: 50px;
+  }
+  
+  .feature-icon {
+    width: 1.8rem;
+    height: 1.8rem;
+  }
+  
+  .hero-feature span {
+    font-size: 0.9rem;
   }
   
   .hero-stats {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
     gap: 0.75rem;
-    margin-top: 1.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
   }
   
   .stat-item {
-    min-width: 0;
-    padding: 0.75rem;
+    min-width: 120px;
+    padding: 0.8rem;
+    flex: 1;
+    min-width: 40%;
   }
   
   .stat-value {
-    font-size: 1.6rem;
-    margin-bottom: 0.25rem;
+    font-size: 1.5rem;
   }
   
   .stat-label {
@@ -333,32 +371,12 @@
     font-size: 1.6rem;
   }
   
-  .hero-content p {
-    font-size: 0.9rem;
-  }
-  
   .hero-features {
-    margin-top: 1rem;
+    max-width: 280px;
   }
   
-  .hero-feature {
-    padding: 0.5rem;
-  }
-  
-  .feature-icon {
-    width: 1.75rem;
-    height: 1.75rem;
-  }
-  
-  .hero-feature span {
-    font-size: 0.9rem;
-  }
-  
-  .stat-value {
-    font-size: 1.4rem;
-  }
-  
-  .stat-label {
-    font-size: 0.75rem;
+  .stat-item {
+    min-width: 45%;
+    padding: 0.7rem;
   }
 }

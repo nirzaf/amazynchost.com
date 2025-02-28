@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, useMemo } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { 
   OrbitControls, 
@@ -243,6 +243,286 @@ const Cloud = ({ position = [0, 0, 0], scale = 1 }) => {
   );
 };
 
+// Data Transmission Effect Component
+const DataTransmission = ({ 
+  start, 
+  end, 
+  speed = 1, 
+  color = "#00ffff", 
+  size = 0.05 
+}) => {
+  const particleRef = useRef<THREE.Mesh>(null!);
+  const [active, setActive] = useState(true);
+  const [progress, setProgress] = useState(0);
+  
+  useFrame(({ clock }) => {
+    if (particleRef.current && active) {
+      // Update progress
+      const newProgress = progress + 0.01 * speed;
+      
+      if (newProgress >= 1) {
+        setActive(false);
+        setTimeout(() => {
+          setProgress(0);
+          setActive(true);
+        }, 1000 + Math.random() * 2000); // Random delay before restarting
+      } else {
+        setProgress(newProgress);
+      }
+      
+      // Interpolate position
+      particleRef.current.position.x = start[0] + (end[0] - start[0]) * progress;
+      particleRef.current.position.y = start[1] + (end[1] - start[1]) * progress;
+      particleRef.current.position.z = start[2] + (end[2] - start[2]) * progress;
+      
+      // Pulse effect
+      const material = particleRef.current.material as THREE.MeshBasicMaterial;
+      material.opacity = Math.sin(clock.getElapsedTime() * 10) * 0.5 + 0.5;
+    }
+  });
+  
+  return (
+    <mesh ref={particleRef} position={[start[0], start[1], start[2]]} visible={active}>
+      <sphereGeometry args={[size, 8, 8]} />
+      <meshBasicMaterial color={color} transparent opacity={0.8} />
+    </mesh>
+  );
+};
+
+// Satellite Component
+const Satellite = ({ 
+  orbitRadius = 4, 
+  orbitSpeed = 0.2, 
+  orbitAngle = 0,
+  connectToGlobe = false,
+  globePosition = [-5, 0, -2]
+}) => {
+  const satelliteRef = useRef<THREE.Group>(null!);
+  const orbitRef = useRef<THREE.Line>(null!);
+  const signalRef = useRef<THREE.Mesh>(null!);
+  const connectionRef = useRef<THREE.Line>(null!);
+  const [initialAngle] = useState(orbitAngle);
+  const [showConnection, setShowConnection] = useState(false);
+  const [satellitePosition, setSatellitePosition] = useState([orbitRadius, 0, 0]);
+  
+  // Create orbit path points
+  const orbitPoints = useMemo(() => {
+    const points = [];
+    for (let i = 0; i <= 64; i++) {
+      const angle = (i / 64) * Math.PI * 2;
+      points.push(
+        new THREE.Vector3(
+          Math.cos(angle) * orbitRadius,
+          Math.sin(angle) * orbitRadius * 0.4, // Elliptical orbit
+          0
+        )
+      );
+    }
+    return points;
+  }, [orbitRadius]);
+  
+  useFrame(({ clock }) => {
+    if (satelliteRef.current) {
+      const time = clock.getElapsedTime();
+      const angle = initialAngle + time * orbitSpeed;
+      
+      // Position satellite along orbit path
+      const satX = Math.cos(angle) * orbitRadius;
+      const satY = Math.sin(angle) * orbitRadius * 0.4;
+      satelliteRef.current.position.x = satX;
+      satelliteRef.current.position.y = satY;
+      
+      // Update satellite position for data transmission
+      setSatellitePosition([satX, satY, 0]);
+      
+      // Rotate satellite to face direction of travel
+      satelliteRef.current.rotation.z = angle + Math.PI / 2;
+      
+      // Subtle wobble
+      satelliteRef.current.rotation.x = Math.sin(time * 0.5) * 0.1;
+      
+      // Blinking signal effect
+      if (signalRef.current) {
+        const material = signalRef.current.material as THREE.MeshBasicMaterial;
+        const blinkState = Math.sin(time * 3) > 0.7;
+        material.opacity = blinkState ? 1 : 0.2;
+        
+        // Signal pulse effect
+        if (blinkState && time % 4 < 0.1) {
+          // Create signal pulse
+          const pulseGeometry = new THREE.RingGeometry(0.05, 0.1, 16);
+          const pulseMaterial = new THREE.MeshBasicMaterial({
+            color: '#ff0000',
+            transparent: true,
+            opacity: 0.8,
+            side: THREE.DoubleSide
+          });
+          
+          const pulse = new THREE.Mesh(pulseGeometry, pulseMaterial);
+          pulse.position.copy(signalRef.current.position);
+          pulse.rotation.x = Math.PI / 2;
+          satelliteRef.current.add(pulse);
+          
+          // Animate and remove pulse
+          const startTime = time;
+          const animatePulse = (currentTime: number) => {
+            const elapsed = currentTime - startTime;
+            if (elapsed > 1) {
+              satelliteRef.current.remove(pulse);
+              pulse.geometry.dispose();
+              (pulse.material as THREE.Material).dispose();
+              return;
+            }
+            
+            const scale = 1 + elapsed * 3;
+            pulse.scale.set(scale, scale, scale);
+            (pulse.material as THREE.MeshBasicMaterial).opacity = 0.8 - elapsed * 0.8;
+            
+            requestAnimationFrame(() => animatePulse(clock.getElapsedTime()));
+          };
+          
+          requestAnimationFrame(() => animatePulse(time));
+        }
+      }
+      
+      // Globe connection effect
+      if (connectToGlobe && connectionRef.current) {
+        // Periodically show connection to globe
+        if (Math.floor(time) % 8 === 0 && !showConnection) {
+          setShowConnection(true);
+          setTimeout(() => setShowConnection(false), 3000);
+        }
+        
+        if (showConnection) {
+          // Update connection line points
+          const lineGeometry = connectionRef.current.geometry as THREE.BufferGeometry;
+          const positions = lineGeometry.attributes.position.array as Float32Array;
+          
+          // Start point (satellite position)
+          positions[0] = satX;
+          positions[1] = satY;
+          positions[2] = 0;
+          
+          // End point (globe position)
+          positions[3] = globePosition[0];
+          positions[4] = globePosition[1];
+          positions[5] = globePosition[2];
+          
+          lineGeometry.attributes.position.needsUpdate = true;
+          
+          // Animate connection line
+          const material = connectionRef.current.material as THREE.LineBasicMaterial;
+          material.opacity = (Math.sin(time * 10) + 1) / 2;
+        }
+      }
+    }
+  });
+  
+  return (
+    <group>
+      {/* Orbit path */}
+      <line ref={orbitRef}>
+        <bufferGeometry attach="geometry">
+          <bufferAttribute
+            attach="attributes-position"
+            array={new Float32Array(orbitPoints.flatMap(p => [p.x, p.y, p.z]))}
+            count={orbitPoints.length}
+            itemSize={3}
+          />
+        </bufferGeometry>
+        <lineBasicMaterial attach="material" color="#2563eb" opacity={0.3} transparent />
+      </line>
+      
+      {/* Satellite */}
+      <group ref={satelliteRef} position={[orbitRadius, 0, 0]}>
+        {/* Main satellite body */}
+        <mesh>
+          <boxGeometry args={[0.4, 0.2, 0.2]} />
+          <meshStandardMaterial color="#e2e8f0" metalness={0.8} roughness={0.2} />
+        </mesh>
+        
+        {/* Solar panels */}
+        <mesh position={[0, 0, 0.3]}>
+          <boxGeometry args={[0.1, 0.8, 0.02]} />
+          <meshStandardMaterial color="#3b82f6" metalness={0.5} roughness={0.2} />
+        </mesh>
+        <mesh position={[0, 0, -0.3]}>
+          <boxGeometry args={[0.1, 0.8, 0.02]} />
+          <meshStandardMaterial color="#3b82f6" metalness={0.5} roughness={0.2} />
+        </mesh>
+        
+        {/* Antenna */}
+        <mesh position={[0.25, 0, 0]} rotation={[0, 0, Math.PI / 2]}>
+          <cylinderGeometry args={[0.01, 0.01, 0.3, 8]} />
+          <meshStandardMaterial color="#94a3b8" metalness={0.8} roughness={0.2} />
+        </mesh>
+        
+        {/* Blinking signal light */}
+        <mesh ref={signalRef} position={[0.2, 0.1, 0]}>
+          <sphereGeometry args={[0.03, 8, 8]} />
+          <meshBasicMaterial color="#ff0000" transparent opacity={0.8} />
+        </mesh>
+        
+        {/* Signal light glow */}
+        <pointLight position={[0.2, 0.1, 0]} color="#ff0000" intensity={0.5} distance={2} />
+      </group>
+      
+      {/* Connection to globe */}
+      {connectToGlobe && (
+        <>
+          <line ref={connectionRef} visible={showConnection}>
+            <bufferGeometry attach="geometry">
+              <bufferAttribute
+                attach="attributes-position"
+                array={new Float32Array([orbitRadius, 0, 0, globePosition[0], globePosition[1], globePosition[2]])}
+                count={2}
+                itemSize={3}
+              />
+            </bufferGeometry>
+            <lineBasicMaterial 
+              attach="material" 
+              color="#00ffff" 
+              opacity={0.7} 
+              transparent 
+              linewidth={1} 
+              dashed={true}
+              dashSize={0.1}
+              gapSize={0.05}
+            />
+          </line>
+          
+          {/* Data transmission particles */}
+          {showConnection && (
+            <>
+              <DataTransmission 
+                start={satellitePosition} 
+                end={globePosition} 
+                speed={1.5} 
+                color="#00ffff" 
+                size={0.05} 
+              />
+              <DataTransmission 
+                start={satellitePosition} 
+                end={globePosition} 
+                speed={1.2} 
+                color="#0ea5e9" 
+                size={0.04} 
+              />
+              <DataTransmission 
+                start={globePosition} 
+                end={satellitePosition} 
+                speed={1.8} 
+                color="#a855f7" 
+                size={0.05} 
+              />
+            </>
+          )}
+        </>
+      )}
+    </group>
+  );
+};
+
 // Main Background Animation Component
 const BackgroundAnimation = ({ style = {} }: { style?: React.CSSProperties }) => {
   return (
@@ -297,6 +577,22 @@ const BackgroundAnimation = ({ style = {} }: { style?: React.CSSProperties }) =>
         <Cloud position={[0, 3, 0]} scale={1.2} />
         <Cloud position={[-3, 2, -1]} scale={0.8} />
         <Cloud position={[3, 3, -2]} scale={1} />
+        
+        {/* Orbiting satellites */}
+        <Satellite 
+          orbitRadius={6} 
+          orbitSpeed={0.2} 
+          orbitAngle={0} 
+          connectToGlobe={true}
+          globePosition={[-5, 0, -2]}
+        />
+        <Satellite 
+          orbitRadius={8} 
+          orbitSpeed={0.15} 
+          orbitAngle={Math.PI / 3}
+          connectToGlobe={true}
+          globePosition={[-5, 0, -2]}
+        />
         
         <OrbitControls 
           enableZoom={false} 
