@@ -73,7 +73,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({
         setContentOpacity(0.05);
         
         // Gradually increase opacity over 5 seconds
-        const duration = 5000; // 5 seconds
+        const duration = 3000; // 5 seconds
         const interval = 50; // Update every 50ms
         const steps = duration / interval;
         const increment = 0.7 / steps; // From 0.05 to 1.0
